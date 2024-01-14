@@ -19,7 +19,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       bodyAttrs: {
-        class: "bg-zinc-50 relative",
+        class: "bg-zinc-50 relative min-h-screen",
       },
     },
   },

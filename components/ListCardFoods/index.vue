@@ -1,8 +1,12 @@
 <template>
-  <div class="px-5 py-5 md:px-10 mb-20">
-    <div class="flex items-center mb-10">
-      <font-awesome-icon :icon="props.icon" class="p-2 bg-green-400 text-white  rounded-xl mr-3 shadow-lg shadow-green-200" :size="'lg'"/>
-      <h1 class="text-4xl font-bold ">{{ props.title }}</h1>
+  <div class="px-5 py-5 md:px-10 mb-20 relative">
+    <div class="flex items-center mb-10 border-b-2 py-3">
+      <font-awesome-icon
+        :icon="props.icon"
+        class="p-2 bg-green-400 text-white rounded-xl mr-3 shadow-lg shadow-green-200"
+        :size="'lg'"
+      />
+      <h1 class="text-4xl title">{{ props.title }}</h1>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-10">
       <div
@@ -19,7 +23,7 @@
 <script setup lang="ts">
 const props = defineProps({
   title: { type: String, required: true },
-  icon: { type: Array, default: () => ['fas', 'bowl-food'] }, 
+  icon: { type: Array, default: () => ["fas", "bowl-food"] },
 });
 </script>
 

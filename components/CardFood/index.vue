@@ -17,13 +17,13 @@
 
       <div class="flex justify-between mt-3">
         <button
-          class="hover:text-white hover:bg-green-400 font-semibold text-lg py-2 px-3 rounded-xl"
+          class="text-white bg-green-400 hover:bg-green-500 hover:shadow-xl hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-xl w-full mr-2"
         >
           COMPRAR
           <font-awesome-icon :icon="['fas', 'cart-shopping']" />
         </button>
         <button
-          class="hover:text-white hover:bg-green-400 font-semibold text-lg py-2 px-3 rounded-xl"
+          class=" hover:border-green-400 hover:text-green-500 border-2 font-semibold text-lg py-2 px-3 rounded-xl w-full text-zinc-500"
         >
           FAVORITOS
           <font-awesome-icon :icon="['far', 'heart']" />
