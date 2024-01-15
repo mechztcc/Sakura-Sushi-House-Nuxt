@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@nuxtjs/device',
+    '@vee-validate/nuxt',
     "@nuxt/test-utils/module",
     [
       "@nuxtjs/google-fonts",

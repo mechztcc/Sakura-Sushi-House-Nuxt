@@ -27,6 +27,11 @@
   "dependencies": {
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
-    "@fortawesome/vue-fontawesome": "^3.0.5"
+    "@fortawesome/vue-fontawesome": "^3.0.5",
+    "@vee-validate/nuxt": "^4.12.4",
+    "@vee-validate/zod": "^4.12.4",
+    "@vueuse/core": "^10.7.2",
+    "vee-validate": "^4.12.4",
+    "zod": "^3.22.4"
   }
 }
