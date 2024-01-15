@@ -1,83 +1,130 @@
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-2 bg-cover min-h-screen">
-    <div
-      class="col-span-1 md:col-span-1 px-5 md:px-20 py-5 md:py-20 flex items-center"
-    >
-      <div class="flex flex-col p-5 bg-zinc-50 w-full rounded-xl md:p-10">
-        <font-awesome-icon
-          class="mr-2 text-orange-400"
-          :icon="['fas', 'shrimp']"
-          :size="'3x'"
-        />
-        <NuxtLink to="/">
-          <h1 class="title text-3xl text-center cursor-pointer">
-            Sakura House
-          </h1>
-        </NuxtLink>
-        <span class="text-xl text-zinc-500 text-center mt-3">
-          Crie sua conta para explorar nosso delicioso menu e fazer pedidos
-          online
-        </span>
-
-        <label for="" class="mb-2 mt-10 font-semibold">E-mail</label>
-        <div class="flex w-full items-center border rounded-full px-5">
+  <Form :validation-schema="schema"  @submit="onHandleSubmit" >
+    <div class="grid grid-cols-1 md:grid-cols-2 bg-cover min-h-screen">
+      <div
+        class="col-span-1 md:col-span-1 px-5 md:px-20 py-5 md:py-20 flex items-center"
+      >
+        <div class="flex flex-col p-5 bg-zinc-50 w-full rounded-xl md:p-10 fade-in">
           <font-awesome-icon
-            :icon="['far', 'envelope']"
-            class="text-green-400 rounded-full"
+            class="mr-2 text-orange-400"
+            :icon="['fas', 'shrimp']"
+            :size="'3x'"
           />
-          <input type="text" class="p-3 rounded-xl outline-none w-full" />
-        </div>
-
-        <label for="" class="mb-2 mt-5 font-semibold">Telefone</label>
-        <div class="flex w-full items-center border rounded-full px-5">
-          <font-awesome-icon
-            :icon="['far', 'envelope']"
-            class="text-green-400 rounded-full"
-          />
-          <input type="text" class="p-3 rounded-xl outline-none w-full" />
-        </div>
-
-        <label for="" class="mb-2 mt-5 font-semibold">Senha</label>
-        <div class="flex w-full items-center border rounded-full px-5">
-          <input
-            :type="isPass ? 'text' : 'password'"
-            class="p-3 rounded-xl outline-none w-full"
-          />
-          <font-awesome-icon
-            class="p-2 bg-green-400 rounded-full text-white cursor-pointer w-6 hover:shadow-xl hover:shadow-green-200"
-            @click="onHandleVisibility"
-            :icon="isPass ? ['fas', 'eye'] : ['fas', 'eye-slash']"
-          />
-        </div>
-
-        <button
-          class="text-white bg-green-400 hover:bg-green-500 hover:shadow-xl mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
-        >
-          CRIAR CONTA
-          <font-awesome-icon :icon="['fas', 'right-to-bracket']" class="ml-2" />
-        </button>
-
-        <hr class="my-5" />
-        <span class="text-center text-zinc-500 cursor-pointer">
-          Possui uma conta?
-          <NuxtLink to="/login">
-            <b class="text-green-400 mx-2">Login</b>
+          <NuxtLink to="/">
+            <h1 class="title text-3xl text-center cursor-pointer">
+              Sakura House
+            </h1>
           </NuxtLink>
-        </span>
+          <span class="text-xl text-zinc-500 text-center mt-3">
+            Crie sua conta para explorar nosso delicioso menu e fazer pedidos
+            online
+          </span>
+
+          <label for="" class="mb-2 mt-10 font-semibold">E-mail</label>
+          <div class="flex w-full items-center border rounded-full px-5">
+            <font-awesome-icon
+              :icon="['far', 'envelope']"
+              class="text-green-400 rounded-full"
+            />
+            <Field
+              name="email"
+              type="text"
+              class="p-3 rounded-xl outline-none w-full"
+            />
+          </div>
+
+          <label for="" class="mb-2 mt-5 font-semibold">Telefone</label>
+          <div class="flex w-full items-center border rounded-full px-5">
+            <font-awesome-icon
+              :icon="['fas', 'phone']"
+              class="text-green-400 rounded-full"
+            />
+            <Field
+              name="phone"
+              type="text"
+              class="p-3 rounded-xl outline-none w-full"
+              v-maska data-maska="(##) # ####-####"
+            />
+          </div>
+          <ErrorMessage
+            name="phone"
+            class="text-orange-400 text-sm mt-2 text-end"
+          />
+
+          <label for="" class="mb-2 mt-5 font-semibold">Senha</label>
+          <div class="flex w-full items-center border rounded-full px-5">
+            <Field
+              name="password"
+              :type="isPass ? 'text' : 'password'"
+              class="p-3 rounded-xl outline-none w-full"
+            />
+            <font-awesome-icon
+              class="p-2 bg-green-400 rounded-full text-white cursor-pointer w-6 hover:shadow-xl hover:shadow-green-200"
+              @click="onHandleVisibility"
+              :icon="isPass ? ['fas', 'eye'] : ['fas', 'eye-slash']"
+            />
+          </div>
+          <ErrorMessage
+            name="password"
+            class="text-orange-400 text-sm mt-2 text-end"
+          />
+
+          <button
+            v-if="!isLoading"
+            class="text-white bg-green-400 hover:bg-green-500 hover:shadow-xl mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
+          >
+            CRIAR CONTA
+            <font-awesome-icon
+              :icon="['fas', 'right-to-bracket']"
+              class="ml-2"
+            />
+          </button>
+
+          <button
+            v-if="isLoading"
+            disabled
+            class="text-white bg-green-300 mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
+          >
+            <font-awesome-icon :icon="['fas', 'shrimp']" />
+          </button>
+
+          <hr class="my-5" />
+          <span class="text-center text-zinc-500 cursor-pointer">
+            Possui uma conta?
+            <NuxtLink to="/login">
+              <b class="text-green-400 mx-2">Login</b>
+            </NuxtLink>
+          </span>
+        </div>
       </div>
     </div>
-  </div>
+  </Form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
-
-const isPass = ref(false);
-
+import { Form, Field, ErrorMessage } from "vee-validate";
+import { toTypedSchema } from "@vee-validate/zod";
+import * as zod from "zod";
 definePageMeta({ layout: "no-navbar" });
+
+const schema = toTypedSchema(
+  zod.object({
+    email: zod.string().email({ message: "E-mail inválido" }),
+    phone: zod.string().min(9, { message: "Telefone é obrigatório" }),
+    password: zod.string().min(6, { message: "Senha é obrigatório" }),
+  })
+);
+const isPass = ref(false);
+const isLoading = ref(false);
 
 function onHandleVisibility() {
   isPass.value = !isPass.value;
+}
+
+function onHandleSubmit(v: any) {
+  isLoading.value = true;
+  console.log(v);
 }
 </script>
 

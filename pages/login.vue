@@ -1,10 +1,10 @@
 <template>
-  <Form :validation-schema="schema">
+  <Form :validation-schema="schema" @submit="onHandleSubmit">
     <div class="grid grid-cols-1 md:grid-cols-2 bg-cover min-h-screen">
       <div
         class="col-span-1 md:col-span-1 px-5 md:px-20 py-5 md:py-20 flex items-center"
       >
-        <div class="flex flex-col p-5 bg-zinc-50 w-full rounded-xl md:p-10">
+        <div class="flex flex-col p-5 bg-zinc-50 w-full rounded-xl md:p-10 fade-in">
           <font-awesome-icon
             class="mr-2 text-orange-400"
             :icon="['fas', 'shrimp']"
@@ -15,10 +15,10 @@
               Sakura House
             </h1>
           </NuxtLink>
-          <span class="text-xl text-zinc-500 text-center mt-3"
-            >Entre com sua conta para explorar nosso delicioso menu e fazer
-            pedidos online</span
-          >
+          <span class="text-xl text-zinc-500 text-center mt-3">
+            Entre com sua conta para explorar nosso delicioso menu e fazer
+            pedidos online
+          </span>
 
           <label for="" class="mb-2 mt-10 font-semibold">E-mail</label>
           <div class="flex w-full items-center border rounded-full px-5">
@@ -46,7 +46,10 @@
               :icon="isPass ? ['fas', 'eye'] : ['fas', 'eye-slash']"
             />
           </div>
-          <ErrorMessage name="password" />
+          <ErrorMessage
+            name="password"
+            class="text-orange-400 text-sm mt-2 text-end"
+          />
 
           <span
             class="text-end hover:text-green-400 text-zinc-500 mt-2 cursor-pointer"
@@ -55,19 +58,23 @@
           </span>
 
           <button
-            @click="onHandleSubmit()"
+            v-if="!isLoading"
             class="text-white bg-green-400 hover:bg-green-500 hover:shadow-xl mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
           >
             ENTRAR
-            <font-awesome-icon
-              :icon="['fas', 'right-to-bracket']"
-              class="ml-2"
-            />
+          </button>
+
+          <button
+            v-if="isLoading"
+            disabled
+            class="text-white bg-green-300 mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
+          >
+            <font-awesome-icon :icon="['fas', 'shrimp']" />
           </button>
 
           <hr class="my-5" />
-          <span class="text-center text-zinc-500 cursor-pointer"
-            >Não possui conta?
+          <span class="text-center text-zinc-500 cursor-pointer">
+            Não possui conta?
             <NuxtLink to="/create-account">
               <b class="text-green-400 mx-2">Criar conta</b>
             </NuxtLink>
@@ -78,37 +85,29 @@
   </Form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as zod from "zod";
+definePageMeta({ layout: "no-navbar" });
 
-const { errors, isSubmitting, handleSubmit, values } = useForm({
-  initialValues: { email: "aaaaaa", password: "" },
-  initialErrors: { email: "E-mail é obrigatório", password: "" },
-});
 const schema = toTypedSchema(
   zod.object({
-    email: zod
-      .string()
-      .min(1, { message: "Email is required" })
-      .email({ message: "Must be a valid email" }),
-
-    password: zod.string().min(6, { message: "Password is required" }),
+    email: zod.string().email({ message: "E-mail inválido" }),
+    password: zod.string().min(6, { message: "Senha é obrigatório" }),
   })
 );
-
 const isPass = ref(false);
-
-definePageMeta({ layout: "no-navbar" });
+const isLoading = ref(false);
 
 function onHandleVisibility() {
   isPass.value = !isPass.value;
 }
 
-function onHandleSubmit() {
-  console.log(values);
+function onHandleSubmit(v: any) {
+  isLoading.value = true;
+  console.log(v);
 }
 </script>
 

@@ -20,6 +20,8 @@ export default defineNuxtConfig({
   ],
   app: {
     head: {
+      charset: 'utf-8',
+      title: 'Sakura Sushi',
       bodyAttrs: {
         class: "bg-zinc-50 relative min-h-screen",
       },
