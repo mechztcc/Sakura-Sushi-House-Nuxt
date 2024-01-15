@@ -14,28 +14,18 @@
         class="flex relative overflow-hidden"
         style="border-top-left-radius: 500px"
       >
-        <img
-          v-if="index == 1"
-          class="w-full slide-out-left"
-          :src="currentBanner"
-          alt=""
-        />
-        <img
-          v-if="index == 0"
-          class="w-full slide-out-left"
-          :src="currentBanner"
-          alt=""
-        />
-
+        <img class="w-full slide-out-left" :src="currentBanner" alt="" />
         <div
           class="absolute flex justify-between bottom-1/2 text-white w-full px-10"
         >
           <font-awesome-icon
+            @click="onHandle()"
             class="cursor-pointer"
             :icon="['fas', 'circle-chevron-left']"
             :size="'3x'"
           />
           <font-awesome-icon
+            @click="onHandle()"
             class="cursor-pointer"
             :icon="['fas', 'circle-chevron-right']"
             :size="'3x'"
@@ -43,15 +33,11 @@
         </div>
         <div class="absolute flex bottom-0 right-1/2 text-white mb-5">
           <font-awesome-icon
-            :icon="['fas', 'circle']"
+            :icon="index == 0 ? ['fas', 'circle'] : ['far', 'circle']"
             class="mx-3"
-            v-if="index == 0"
           />
-          <font-awesome-icon :icon="['far', 'circle']" />
           <font-awesome-icon
-            :icon="['fas', 'circle']"
-            class="mx-3"
-            v-if="index == 1"
+            :icon="index == 1 ? ['fas', 'circle'] : ['far', 'circle']"
           />
         </div>
       </div>
@@ -71,6 +57,10 @@ function changeBanner() {
   setInterval(() => {
     index.value = (index.value + 1) % banners.length;
   }, 5000);
+}
+
+function onHandle() {
+  index.value == 1 ? (index.value = 0) : (index.value = 1);
 }
 
 onMounted(() => {

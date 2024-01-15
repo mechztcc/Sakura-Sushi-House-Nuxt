@@ -1,6 +1,7 @@
 <template>
   <div>
     <Navbar />
+    <BannerAlert />
     <slot></slot>
     <Footer />
   </div>
