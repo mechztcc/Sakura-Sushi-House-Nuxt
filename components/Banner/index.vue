@@ -1,8 +1,8 @@
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-3" style="max-height: 90vh">
+  <div class="grid grid-cols-1 md:grid-cols-3">
     <div class="col-span-1 md:col-span-1">
       <div class="flex flex-col h-full justify-center mx-5 md:mx-10">
-        <h1 class="text-6xl title">Você gosta de comida Japonesa?</h1>
+        <h1 class="text-5xl title">Você gosta de comida Japonesa?</h1>
         <span class="mt-3 text-xl"
           >Explore o sabor autêntico do Japão no conforto da sua casa.</span
         >
@@ -32,12 +32,12 @@
         >
           <font-awesome-icon
             class="cursor-pointer"
-            :icon="['fas', 'chevron-left']"
+            :icon="['fas', 'circle-chevron-left']"
             :size="'3x'"
           />
           <font-awesome-icon
             class="cursor-pointer"
-            :icon="['fas', 'chevron-right']"
+            :icon="['fas', 'circle-chevron-right']"
             :size="'3x'"
           />
         </div>

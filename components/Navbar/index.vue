@@ -4,12 +4,12 @@
   >
     <div class="flex items-center">
       <font-awesome-icon class="mr-2" :icon="['fas', 'shrimp']" :size="'3x'" />
-      <NuxtLink to="/">
+      <NuxtLink to="/" v-if="$device.isDesktop">
         <h1 class="text-3xl title">Sakura House</h1>
       </NuxtLink>
     </div>
     <div class="flex items-center">
-      <div class="flex rounded-full items-center px-3 py-1 border-2">
+      <div class="flex rounded-full items-center px-3 py-1 border-2" v-if="$device.isDesktop">
         <font-awesome-icon
           :icon="['fas', 'magnifying-glass']"
           class="text-zinc-400"

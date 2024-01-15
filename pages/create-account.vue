@@ -14,12 +14,21 @@
             Sakura House
           </h1>
         </NuxtLink>
-        <span class="text-xl text-zinc-500 text-center mt-3"
-          >Entre com sua conta para explorar nosso delicioso menu e fazer
-          pedidos online</span
-        >
+        <span class="text-xl text-zinc-500 text-center mt-3">
+          Crie sua conta para explorar nosso delicioso menu e fazer pedidos
+          online
+        </span>
 
         <label for="" class="mb-2 mt-10 font-semibold">E-mail</label>
+        <div class="flex w-full items-center border rounded-full px-5">
+          <font-awesome-icon
+            :icon="['far', 'envelope']"
+            class="text-green-400 rounded-full"
+          />
+          <input type="text" class="p-3 rounded-xl outline-none w-full" />
+        </div>
+
+        <label for="" class="mb-2 mt-5 font-semibold">Telefone</label>
         <div class="flex w-full items-center border rounded-full px-5">
           <font-awesome-icon
             :icon="['far', 'envelope']"
@@ -41,23 +50,18 @@
           />
         </div>
 
-        <span
-          class="text-end hover:text-green-400 text-zinc-500 mt-2 cursor-pointer"
-          >Esqueceu a senha?</span
-        >
-
         <button
           class="text-white bg-green-400 hover:bg-green-500 hover:shadow-xl mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
         >
-          ENTRAR
+          CRIAR CONTA
           <font-awesome-icon :icon="['fas', 'right-to-bracket']" class="ml-2" />
         </button>
 
         <hr class="my-5" />
-        <span class="text-center text-zinc-500 cursor-pointer"
-          >Não possui conta?
-          <NuxtLink to="/create-account">
-            <b class="text-green-400 mx-2">Criar conta</b>
+        <span class="text-center text-zinc-500 cursor-pointer">
+          Possui uma conta?
+          <NuxtLink to="/login">
+            <b class="text-green-400 mx-2">Login</b>
           </NuxtLink>
         </span>
       </div>

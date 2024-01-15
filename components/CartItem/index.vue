@@ -12,21 +12,45 @@
           experiência culinária única.
         </span>
         <span class="text-green-400 text-xl font-semibold">R$ 29,90</span>
-        <div class="flex items-center mt-3">
-          <font-awesome-icon :icon="['fas', 'chevron-left']" />
-          <span class="text-xl mx-3">1</span>
-          <font-awesome-icon :icon="['fas', 'chevron-right']" />
+        <div class="flex items-center mt-3 text-zinc-500">
+          <font-awesome-icon
+            @click="onHandleValue('down')"
+            :icon="['fas', 'circle-chevron-left']"
+            class="cursor-pointer hover:text-orange-400"
+          />
+          <span class="text-xl mx-3">{{ count }}</span>
+          <font-awesome-icon
+            @click="onHandleValue('up')"
+            :icon="['fas', 'circle-chevron-right']"
+            class="cursor-pointer hover:text-green-400"
+          />
         </div>
 
         <div class="flex justify-end">
-          <font-awesome-icon :icon="['fas', 'trash']" class="rounded-xl p-2 cursor-pointer bg-red-400 hover:bg-red-500 text-white hover:shadow-xl hover:shadow-red-200" />
+          <font-awesome-icon
+            :icon="['fas', 'trash']"
+            class="rounded-xl p-2 cursor-pointer bg-red-400 hover:bg-red-500 text-white hover:shadow-xl hover:shadow-red-200"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup lang="ts">
+import { ref } from "vue";
+
+const count: Ref<number> = ref(1);
+
+function onHandleValue(type: "up" | "down") {
+  if (type == "down" && count.value > 0) {
+    count.value--;
+  }
+  if (type == "up") {
+    count.value++;
+  }
+}
+</script>
 
 <style lang="css" scoped>
 img {
