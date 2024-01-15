@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-3">
     <div class="col-span-1">
-      <img class="rounded-xl" src="~assets/sushi/sushi.jpg" />
+      <img class="rounded-xl" src="~assets/sushi/chicken-noodle.jpg" />
     </div>
 
     <div class="col-span-2">

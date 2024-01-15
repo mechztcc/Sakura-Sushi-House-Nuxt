@@ -4,7 +4,7 @@
   >
     <div class="flex items-center">
       <font-awesome-icon class="mr-2" :icon="['fas', 'shrimp']" :size="'3x'" />
-      <NuxtLink to="/home">
+      <NuxtLink to="/">
         <h1 class="text-3xl title">Sakura House</h1>
       </NuxtLink>
     </div>
@@ -20,9 +20,11 @@
           placeholder="Buscar..."
         />
       </div>
-      <button class="hover:text-green-400 font-semibold text-lg mx-3">
-        Entrar
-      </button>
+      <NuxtLink to="/login">
+        <button class="hover:text-green-400 font-semibold text-lg mx-3">
+          Entrar
+        </button>
+      </NuxtLink>
       <NuxtLink to="/cart">
         <button
           class="hover:text-green-400 font-semibold text-lg mx-3"
@@ -31,7 +33,10 @@
           <font-awesome-icon :icon="['fas', 'cart-shopping']" />
         </button>
       </NuxtLink>
-      <button class="hover:text-green-400 font-semibold text-lg mx-3">
+      <button
+        class="hover:text-green-400 font-semibold text-lg mx-3"
+        type="button"
+      >
         <font-awesome-icon :icon="['far', 'heart']" />
       </button>
     </div>

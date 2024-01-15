@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <Navbar />
-    <RouterView />
-    <Footer />
-  </div>
+  <RouterView />
 </template>
+
+<script setup></script>

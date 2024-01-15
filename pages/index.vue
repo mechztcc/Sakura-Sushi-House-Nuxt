@@ -1,13 +1,15 @@
 <template>
-  <div>
+  <NuxtLayout :name="'default'">
     <Banner />
     <ListCardFoods :title="'Recomendados'" />
     <ListCardFoods :title="'Pratos Executivos'" :icon="['fas', 'utensils']" />
     <ListCardFoods :title="'Combos'" :icon="['fas', 'bowl-rice']" />
     <ListCardFoods :title="'Pratos Quentes'" :icon="['fas', 'mug-hot']" />
-  </div>
+  </NuxtLayout>
 </template>
 
-<script setup></script>
+<script setup>
+definePageMeta({ layout: "default" });
+</script>
 
 <style lang="scss" scoped></style>
