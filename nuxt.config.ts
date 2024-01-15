@@ -1,9 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  runtimeConfig: {
+    public: {
+      apiBase: "http://localhost:3000",
+    },
+  },
   modules: [
-    '@nuxtjs/device',
-    '@vee-validate/nuxt',
+    "@nuxtjs/device",
+    "@vee-validate/nuxt",
     "@nuxt/test-utils/module",
     [
       "@nuxtjs/google-fonts",
@@ -20,8 +25,8 @@ export default defineNuxtConfig({
   ],
   app: {
     head: {
-      charset: 'utf-8',
-      title: 'Sakura Sushi',
+      charset: "utf-8",
+      title: "Sakura Sushi",
       bodyAttrs: {
         class: "bg-zinc-50 relative min-h-screen",
       },
@@ -32,5 +37,8 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {},
     },
+  },
+  build: {
+    transpile: ["@fortawesome/vue-fontawesome"],
   },
 });

@@ -11,10 +11,10 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-10">
       <div
         class="col-span-1 md:col-span-1 lg:col-span-1"
-        v-for="(item, index) in 4"
+        v-for="(item, index) in prods"
         :key="index"
       >
-        <CardFood />
+        <CardFood :prod="item" />
       </div>
     </div>
   </div>
@@ -23,6 +23,7 @@
 <script setup lang="ts">
 const props = defineProps({
   title: { type: String, required: true },
+  prods: { type: Array, required: true },
   icon: { type: Array, default: () => ["fas", "bowl-food"] },
 });
 </script>
