@@ -29,10 +29,22 @@
 
   <div class="flex flex-col mt-5">
     <span class="text-zinc-500">Total</span>
-    <span class="text-green-400 font-semibold text-4xl title mt-3">R$ 120,00</span>
+    <span class="text-green-400 font-semibold text-4xl title mt-3">
+      R$ {{ store.totalPrice }}</span
+    >
   </div>
+
+  <hr class="my-3">
+
+  <button
+    class="text-white bg-green-400 hover:bg-green-500 hover:shadow-xl mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
+  >
+    CONCLUIR
+  </button>
 </template>
 
-<script setup></script>
+<script setup>
+const store = useCartStore();
+</script>
 
 <style lang="scss" scoped></style>

@@ -10,7 +10,7 @@
           <h1 class="text-3xl title">Finalizar Compra</h1>
         </div>
       </div>
-      <div class="col-span-1 md:col-span-1 relative">
+      <div class="col-span-1 md:col-span-1 relative mr-5 md:mr-10">
         <div class="flex flex-col justify-center sticky top-20 py-10">
           <CardDelivery />
           <CardPayment />

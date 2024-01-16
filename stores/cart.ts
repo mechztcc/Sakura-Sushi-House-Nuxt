@@ -15,7 +15,6 @@ export const useCartStore = defineStore("carts", {
       const existingItemIndex = this.items.findIndex(
         (prod) => prod.id === item.id
       );
-
       if (existingItemIndex !== -1) {
         this.items[existingItemIndex].count++;
       } else {
@@ -29,6 +28,16 @@ export const useCartStore = defineStore("carts", {
     onDecrement(itemId: number) {
       const existsItem = this.items.filter((prod) => prod.id == itemId);
       existsItem[0].count--;
+    },
+  },
+  getters: {
+    totalPrice(): string {
+      const result = this.items.reduce((total, product) => {
+        const price = Number(product.price.replace(",", "."));
+        const count = Number(product.count);
+        return Number(total) + price * count;
+      }, 0);
+      return result.toFixed(2);
     },
   },
 });
