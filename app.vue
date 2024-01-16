@@ -1,6 +1,6 @@
 <template>
   <RouterView />
-  <UNotifications />
+  <Notification />
 </template>
 
 <script setup></script>
