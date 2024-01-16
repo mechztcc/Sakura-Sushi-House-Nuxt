@@ -1,5 +1,9 @@
 <template>
-  <Form :validation-schema="schema" @submit="onHandleSubmit">
+  <Form
+    ref="registrationForm"
+    :validation-schema="schema"
+    @submit="onHandleSubmit"
+  >
     <div class="grid grid-cols-1 md:grid-cols-2 bg-cover min-h-screen">
       <div
         class="col-span-1 md:col-span-1 px-5 md:px-20 py-5 md:py-20 flex items-center"
@@ -127,7 +131,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { Form, Field, ErrorMessage } from "vee-validate";
+import { Form, Field, ErrorMessage, useResetForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as zod from "zod";
 import { useNotificationStore } from "@/stores/notifications";
@@ -153,17 +157,20 @@ const { execute, data, pending, error } = useLazyFetch(`${url}/users`, {
   body: payload,
 });
 
-async function onHandleSubmit(v) {
+const registrationForm = ref(null);
+
+async function onHandleSubmit(v, { resetForm }) {
   payload.value = {
     ...v,
     role: "CUSTOMER",
   };
-  await execute();
+  await execute().then(() => {
+    store.onSuccess("Conta criada com sucesso!");
+    resetForm();
+  });
 
   if (error.value.data) {
     store.onError(error.value.data.message);
-  } else {
-    store.onSuccess("Conta criada com sucesso!");
   }
 }
 
