@@ -165,8 +165,10 @@ async function onHandleSubmit(v, { resetForm }) {
     role: "CUSTOMER",
   };
   await execute().then(() => {
-    store.onSuccess("Conta criada com sucesso!");
-    resetForm();
+    if (data.value) {
+      store.onSuccess("Conta criada com sucesso!");
+      resetForm();
+    }
   });
 
   if (error.value.data) {

@@ -60,14 +60,14 @@
           </span>
 
           <button
-            v-if="!isLoading"
+            v-if="!pending"
             class="text-white bg-green-400 hover:bg-green-500 hover:shadow-xl mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
           >
             ENTRAR
           </button>
 
           <button
-            v-if="isLoading"
+            v-if="pending"
             disabled
             class="text-white bg-green-300 mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
           >
@@ -87,7 +87,7 @@
   </Form>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from "vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
@@ -96,6 +96,8 @@ import { useNotificationStore } from "@/stores/notifications";
 definePageMeta({ layout: "no-navbar" });
 
 const store = useNotificationStore();
+const runtimeConfig = useRuntimeConfig();
+const router = useRouter();
 
 const schema = toTypedSchema(
   zod.object({
@@ -104,15 +106,48 @@ const schema = toTypedSchema(
   })
 );
 const isPass = ref(false);
-const isLoading = ref(false);
+const payload = ref({});
+const timeout = ref(null);
+
+const url = runtimeConfig.public.apiBase;
+const { execute, data, pending, error } = useLazyFetch(`${url}/auth`, {
+  method: "POST",
+  body: payload,
+});
+
+onMounted(() => {
+  if (process.client) {
+    localStorage.clear();
+  }
+});
+
+onUnmounted(() => {
+  clearTimeout(timeout);
+});
 
 function onHandleVisibility() {
   isPass.value = !isPass.value;
 }
 
-function onHandleSubmit(v: any) {
-  isLoading.value = true;
-  console.log(v);
+async function onHandleSubmit(v, { resetForm }) {
+  payload.value = {
+    ...v,
+  };
+
+  await execute().then(() => {
+    if (data.value && process.client) {
+      store.onSuccess("Login realizado com sucesso!");
+      resetForm();
+      localStorage.setItem("user", JSON.stringify(data.value));
+      timeout.value = setTimeout(() => {
+        router.push("/");
+      }, 2000);
+    }
+  });
+
+  if (error.value.data) {
+    store.onError(error.value.data.message);
+  }
 }
 </script>
 
