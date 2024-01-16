@@ -19,13 +19,19 @@
 
       <div class="col-span-1 md:col-span-2">
         <div class="flex flex-col gap-10 py-10">
-          <CartItem v-for="(item, index) in 10" :key="index" />
+          <CartItem
+            v-for="(item, index) in store.items"
+            :key="index"
+            :prod="item"
+          />
         </div>
       </div>
     </div>
   </NuxtLayout>
 </template>
 
-<script setup></script>
+<script setup>
+const store = useCartStore();
+</script>
 
 <style lang="scss" scoped></style>

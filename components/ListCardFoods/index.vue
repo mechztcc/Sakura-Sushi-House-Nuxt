@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 const props = defineProps({
   title: { type: String, required: true },
   prods: { type: Array, required: true },

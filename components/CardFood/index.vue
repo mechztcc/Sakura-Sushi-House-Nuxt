@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col min-h-full">
     <img class="rounded-xl" :src="props.prod.image" alt="" />
     <div class="flex flex-col">
       <h1 class="font-semibold text-2xl mt-2">{{ props.prod.name }}</h1>
@@ -21,6 +21,7 @@
 
       <div class="flex justify-between mt-3">
         <button
+          @click="store.onAdd(prod)"
           class="text-white bg-green-400 hover:bg-green-500 hover:shadow-xl hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-xl w-full mr-2"
         >
           COMPRAR
@@ -37,10 +38,12 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 const props = defineProps({
   prod: { type: Object, required: true },
 });
+
+const store = useCartStore();
 </script>
 
 <style lang="css" scoped>

@@ -1,26 +1,27 @@
 <template>
   <div class="grid grid-cols-3">
     <div class="col-span-1">
-      <img class="rounded-xl" src="~assets/sushi/chicken-noodle.jpg" />
+      <img class="rounded-xl" :src="prod.image" />
     </div>
 
     <div class="col-span-2">
       <div class="flex flex-col justify-center h-full px-5">
-        <h1 class="text-3xl font-semibold">Makimono G</h1>
+        <h1 class="text-3xl font-semibold">{{ prod.name }}</h1>
         <span class="text-zinc-500">
-          Rolos de sushi cuidadosamente preparados para proporcionar uma
-          experiência culinária única.
+          {{ prod.description }}
         </span>
-        <span class="text-green-400 text-xl font-semibold">R$ 29,90</span>
+        <span class="text-green-400 text-xl font-semibold">
+          R$ {{ prod.price }}
+        </span>
         <div class="flex items-center mt-3 text-zinc-500">
           <font-awesome-icon
-            @click="onHandleValue('down')"
+            @click="store.onDecrement(prod.id)"
             :icon="['fas', 'circle-chevron-left']"
             class="cursor-pointer hover:text-orange-400"
           />
-          <span class="text-xl mx-3">{{ count }}</span>
+          <span class="text-xl mx-3">{{ prod.count }}</span>
           <font-awesome-icon
-            @click="onHandleValue('up')"
+            @click="store.onIncrement(prod.id)"
             :icon="['fas', 'circle-chevron-right']"
             class="cursor-pointer hover:text-green-400"
           />
@@ -28,6 +29,7 @@
 
         <div class="flex justify-end">
           <font-awesome-icon
+            @click="store.onRemove(prod)"
             :icon="['fas', 'trash']"
             class="rounded-xl p-2 cursor-pointer bg-red-400 hover:bg-red-500 text-white hover:shadow-xl hover:shadow-red-200"
           />
@@ -37,19 +39,14 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from "vue";
+const props = defineProps({
+  prod: { type: Object, required: true },
+});
 
-const count: Ref<number> = ref(1);
-
-function onHandleValue(type: "up" | "down") {
-  if (type == "down" && count.value > 0) {
-    count.value--;
-  }
-  if (type == "up") {
-    count.value++;
-  }
-}
+const count = ref(1);
+const store = useCartStore();
 </script>
 
 <style lang="css" scoped>

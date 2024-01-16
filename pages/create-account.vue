@@ -139,6 +139,7 @@ definePageMeta({ layout: "no-navbar" });
 
 const store = useNotificationStore();
 const runtimeConfig = useRuntimeConfig();
+const router = useRouter();
 
 const schema = toTypedSchema(
   zod.object({
@@ -168,6 +169,7 @@ async function onHandleSubmit(v, { resetForm }) {
     if (data.value) {
       store.onSuccess("Conta criada com sucesso!");
       resetForm();
+      router.push("/login");
     }
   });
 

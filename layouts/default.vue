@@ -3,7 +3,6 @@
     <Navbar />
     <BannerAlert />
     <slot></slot>
-    <Footer />
   </div>
 </template>
 
