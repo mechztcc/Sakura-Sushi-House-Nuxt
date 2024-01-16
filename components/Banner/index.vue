@@ -48,8 +48,8 @@
 import { ref } from "vue";
 
 const banners = [
-  "/_nuxt/assets/sushi/yakissoba.jpg",
-  "/_nuxt/assets/sushi/chicken-noodle.jpg",
+  "~assets/sushi/yakissoba.jpg",
+  "~assets/sushi/chicken-noodle.jpg",
 ];
 const index = ref(0);
 const currentBanner = computed(() => banners[index.value]);
