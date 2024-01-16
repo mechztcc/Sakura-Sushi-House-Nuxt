@@ -1,10 +1,12 @@
 <template>
-  <Form :validation-schema="schema"  @submit="onHandleSubmit" >
+  <Form :validation-schema="schema" @submit="onHandleSubmit">
     <div class="grid grid-cols-1 md:grid-cols-2 bg-cover min-h-screen">
       <div
         class="col-span-1 md:col-span-1 px-5 md:px-20 py-5 md:py-20 flex items-center"
       >
-        <div class="flex flex-col p-5 bg-zinc-50 w-full rounded-xl md:p-10 fade-in">
+        <div
+          class="flex flex-col p-5 bg-zinc-50 w-full rounded-xl md:p-10 fade-in"
+        >
           <font-awesome-icon
             class="mr-2 text-orange-400"
             :icon="['fas', 'shrimp']"
@@ -32,6 +34,27 @@
               class="p-3 rounded-xl outline-none w-full"
             />
           </div>
+          <ErrorMessage
+            name="email"
+            class="text-orange-400 text-sm mt-2 text-end"
+          />
+
+          <label for="" class="mb-2 mt-5 font-semibold">Nome</label>
+          <div class="flex w-full items-center border rounded-full px-5">
+            <font-awesome-icon
+              :icon="['far', 'user']"
+              class="text-green-400 rounded-full"
+            />
+            <Field
+              name="name"
+              type="text"
+              class="p-3 rounded-xl outline-none w-full"
+            />
+          </div>
+          <ErrorMessage
+            name="name"
+            class="text-orange-400 text-sm mt-2 text-end"
+          />
 
           <label for="" class="mb-2 mt-5 font-semibold">Telefone</label>
           <div class="flex w-full items-center border rounded-full px-5">
@@ -43,7 +66,8 @@
               name="phone"
               type="text"
               class="p-3 rounded-xl outline-none w-full"
-              v-maska data-maska="(##) # ####-####"
+              v-maska
+              data-maska="(##) # ####-####"
             />
           </div>
           <ErrorMessage
@@ -70,7 +94,7 @@
           />
 
           <button
-            v-if="!isLoading"
+            v-if="!pending"
             class="text-white bg-green-400 hover:bg-green-500 hover:shadow-xl mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
           >
             CRIAR CONTA
@@ -81,7 +105,7 @@
           </button>
 
           <button
-            v-if="isLoading"
+            v-if="pending"
             disabled
             class="text-white bg-green-300 mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
           >
@@ -101,30 +125,44 @@
   </Form>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from "vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as zod from "zod";
+
 definePageMeta({ layout: "no-navbar" });
+const runtimeConfig = useRuntimeConfig();
 
 const schema = toTypedSchema(
   zod.object({
     email: zod.string().email({ message: "E-mail inválido" }),
+    name: zod.string().nonempty({ message: "Nome inválido" }),
     phone: zod.string().min(9, { message: "Telefone é obrigatório" }),
     password: zod.string().min(6, { message: "Senha é obrigatório" }),
   })
 );
 const isPass = ref(false);
-const isLoading = ref(false);
+const payload = ref({});
+
+const url = runtimeConfig.public.apiBase;
+const { execute, data, pending, error } = useLazyFetch(`${url}/users`, {
+  method: "POST",
+  body: payload,
+});
+
+async function onHandleSubmit(v) {
+  payload.value = {
+    ...v,
+    role: "CUSTOMER",
+  };
+  await execute();
+
+  // console.log(error.value.data);
+}
 
 function onHandleVisibility() {
   isPass.value = !isPass.value;
-}
-
-function onHandleSubmit(v: any) {
-  isLoading.value = true;
-  console.log(v);
 }
 </script>
 

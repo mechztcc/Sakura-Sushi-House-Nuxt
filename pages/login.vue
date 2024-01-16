@@ -4,7 +4,9 @@
       <div
         class="col-span-1 md:col-span-1 px-5 md:px-20 py-5 md:py-20 flex items-center"
       >
-        <div class="flex flex-col p-5 bg-zinc-50 w-full rounded-xl md:p-10 fade-in">
+        <div
+          class="flex flex-col p-5 bg-zinc-50 w-full rounded-xl md:p-10 fade-in"
+        >
           <font-awesome-icon
             class="mr-2 text-orange-400"
             :icon="['fas', 'shrimp']"
