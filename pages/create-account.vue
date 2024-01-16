@@ -130,8 +130,10 @@ import { ref } from "vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as zod from "zod";
-
+import { useNotificationStore } from "@/stores/notifications";
 definePageMeta({ layout: "no-navbar" });
+
+const store = useNotificationStore();
 const runtimeConfig = useRuntimeConfig();
 
 const schema = toTypedSchema(
@@ -158,7 +160,11 @@ async function onHandleSubmit(v) {
   };
   await execute();
 
-  // console.log(error.value.data);
+  if (error.value.data) {
+    store.onError(error.value.data.message);
+  } else {
+    store.onSuccess("Conta criada com sucesso!");
+  }
 }
 
 function onHandleVisibility() {

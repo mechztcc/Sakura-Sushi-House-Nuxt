@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
+    "@pinia/nuxt",
     "@nuxtjs/device",
     "@vee-validate/nuxt",
     "@nuxt/test-utils/module",

@@ -92,7 +92,10 @@ import { ref } from "vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as zod from "zod";
+import { useNotificationStore } from "@/stores/notifications";
 definePageMeta({ layout: "no-navbar" });
+
+const store = useNotificationStore();
 
 const schema = toTypedSchema(
   zod.object({
