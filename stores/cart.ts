@@ -3,7 +3,7 @@ import type { IProduct } from "../interfaces/product.interface";
 
 export const useCartStore = defineStore("carts", {
   state: () => {
-    return { items: [] as IProduct[] };
+    return { items: [] as IProduct[], prefs: "" };
   },
   actions: {
     onRemove(item: IProduct) {

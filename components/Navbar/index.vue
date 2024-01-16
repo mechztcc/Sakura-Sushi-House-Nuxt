@@ -2,14 +2,21 @@
   <div
     class="flex justify-between px-5 md:px-10 p-5 shadow-lg sticky top-0 z-20 bg-zinc-50"
   >
-    <div class="flex items-center">
-      <NuxtLink to="/" >
-      <font-awesome-icon class="mr-2" :icon="['fas', 'shrimp']" :size="'3x'" />
+    <NuxtLink to="/">
+      <div class="flex items-center">
+        <font-awesome-icon
+          class="mr-2"
+          :icon="['fas', 'shrimp']"
+          :size="'3x'"
+        />
         <h1 class="text-3xl title" v-if="$device.isDesktop">Sakura House</h1>
-      </NuxtLink>
-    </div>
+      </div>
+    </NuxtLink>
     <div class="flex items-center">
-      <div class="flex rounded-full items-center px-3 py-1 border-2" v-if="$device.isDesktop">
+      <div
+        class="flex rounded-full items-center px-3 py-1 border-2"
+        v-if="$device.isDesktop"
+      >
         <font-awesome-icon
           :icon="['fas', 'magnifying-glass']"
           class="text-zinc-400"
