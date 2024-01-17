@@ -32,7 +32,7 @@
           Entrar
         </button>
       </NuxtLink>
-      <NuxtLink to="/cart">
+      <NuxtLink to="/cart" v-if="hasCredentials">
         <button
           class="hover:text-green-400 font-semibold text-lg mx-3"
           type="button"
@@ -50,6 +50,16 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useStorage } from "@vueuse/core";
+
+const storage = useStorage("credentials");
+const hasCredentials = computed(() => {
+  if (!storage.value || !process.client) {
+    return;
+  }
+  return true;
+});
+</script>
 
 <style lang="scss" scoped></style>

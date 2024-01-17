@@ -93,11 +93,14 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as zod from "zod";
 import { useNotificationStore } from "@/stores/notifications";
+import { useStorage } from "@vueuse/core";
+
 definePageMeta({ layout: "no-navbar" });
 
 const store = useNotificationStore();
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
+const storage = useStorage("credencials");
 
 const schema = toTypedSchema(
   zod.object({
@@ -138,7 +141,7 @@ async function onHandleSubmit(v, { resetForm }) {
     if (data.value && process.client) {
       store.onSuccess("Login realizado com sucesso!");
       resetForm();
-      localStorage.setItem("user", JSON.stringify(data.value));
+      useStorage("credentials", JSON.stringify(data.value));
       timeout.value = setTimeout(() => {
         router.push("/");
       }, 2000);
