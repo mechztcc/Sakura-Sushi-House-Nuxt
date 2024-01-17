@@ -46,14 +46,15 @@
   </div>
 
   <button
-    v-if="!pending"
-    @click="onHandleSubmit"
+    v-if="!isLoading"
+    @click="onHandleSubmit()"
     class="text-white bg-green-400 hover:bg-green-500 hover:shadow-xl mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
   >
     CONCLUIR
   </button>
+
   <button
-    v-if="pending"
+    v-if="isLoading"
     disabled
     class="text-white bg-green-300 mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
   >
@@ -62,15 +63,20 @@
 </template>
 
 <script setup>
+import { useStorage } from "@vueuse/core";
+
 const runtimeConfig = useRuntimeConfig();
 const store = useCartStore();
 const notification = useNotificationStore();
+const credentials = useStorage("credentials");
 const payload = ref({});
-
+const token = ref("");
 const url = runtimeConfig.public.apiBase;
-const { execute, pending, data } = useLazyFetch(`${url}/orders`, {
-  method: "POST",
-  body: payload,
+const isLoading = ref(false);
+
+onMounted(() => {
+  const storedCredentials = JSON.parse(credentials.value);
+  token.value = storedCredentials.user.token;
 });
 
 async function onHandleSubmit() {
@@ -78,12 +84,27 @@ async function onHandleSubmit() {
   if (items.length == 0) {
     return;
   }
+
   payload.value = {
     preferences: store.prefs,
-    products: [...items],
+    products: items,
   };
 
-  await execute();
+  isLoading.value = true;
+  const { data, error } = await useLazyFetch(`${url}/orders`, {
+    method: "POST",
+    body: payload,
+    headers: {
+      authorization: `${token.value}`,
+    },
+  });
+  isLoading.value = false;
+
+  if (error.value.data) {
+    notification.onError(error.value.data.message);
+    console.log(notification.message);
+  }
+
   if (data.value) {
     notification.onSuccess("Compra realizada com sucesso!");
   }

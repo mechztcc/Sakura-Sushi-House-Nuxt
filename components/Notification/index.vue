@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="store.show && store.success"
-    class="bg-zinc-50 p-3 px-3 rounded-xl shadow-xl flex flex-col absolute top-0 right-0 notification"
+    class="bg-zinc-50 p-3 px-3 rounded-xl shadow-xl flex flex-col absolute top-0 right-0 z-40 notification"
   >
     <div class="flex items-center justify-between">
       <div class="flex items-center">
@@ -25,7 +25,7 @@
 
   <div
     v-if="store.error && store.show"
-    class="bg-zinc-50 p-3 px-3 rounded-xl shadow-xl flex flex-col absolute top-0 right-0 notification"
+    class="bg-zinc-50 p-3 px-3 rounded-xl shadow-xl flex flex-col absolute top-0 right-0 z-40 notification"
   >
     <div class="flex items-center justify-between">
       <div class="flex items-center">

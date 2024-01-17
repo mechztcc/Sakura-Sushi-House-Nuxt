@@ -114,6 +114,7 @@ const timeout = ref(null);
 
 const url = runtimeConfig.public.apiBase;
 const { execute, data, pending, error } = useLazyFetch(`${url}/auth`, {
+  immediate: false,
   method: "POST",
   body: payload,
 });

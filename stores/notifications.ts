@@ -9,6 +9,7 @@ export const useNotificationStore = defineStore("notification", {
       this.show = !this.show;
     },
     onSuccess(message: string) {
+      scrollTo(0,0)
       this.show = true;
       this.message = message;
       this.error = false;
@@ -19,6 +20,7 @@ export const useNotificationStore = defineStore("notification", {
       }, 2000);
     },
     onError(message: string) {
+      scrollTo(0,0)
       this.show = true;
       this.message = message;
       this.error = true;
