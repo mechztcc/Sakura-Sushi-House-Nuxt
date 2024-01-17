@@ -102,7 +102,6 @@ async function onHandleSubmit() {
 
   if (error.value.data) {
     notification.onError(error.value.data.message);
-    console.log(notification.message);
   }
 
   if (data.value) {
