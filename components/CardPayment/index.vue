@@ -69,14 +69,21 @@ const runtimeConfig = useRuntimeConfig();
 const store = useCartStore();
 const notification = useNotificationStore();
 const credentials = useStorage("credentials");
+
 const payload = ref({});
 const token = ref("");
-const url = runtimeConfig.public.apiBase;
 const isLoading = ref(false);
+const router = useRouter();
+const timeout = ref(null);
+const url = runtimeConfig.public.apiBase;
 
 onMounted(() => {
   const storedCredentials = JSON.parse(credentials.value);
   token.value = storedCredentials.user.token;
+});
+
+onUnmounted(() => {
+  clearTimeout(timeout);
 });
 
 async function onHandleSubmit() {
@@ -91,7 +98,7 @@ async function onHandleSubmit() {
   };
 
   isLoading.value = true;
-  const { data, error } = await useLazyFetch(`${url}/orders`, {
+  const { error, data } = await useLazyFetch(`${url}/orders`, {
     method: "POST",
     body: payload,
     headers: {
@@ -100,12 +107,16 @@ async function onHandleSubmit() {
   });
   isLoading.value = false;
 
-  if (error.value.data) {
+  if (error.value?.data) {
     notification.onError(error.value.data.message);
   }
 
   if (data.value) {
     notification.onSuccess("Compra realizada com sucesso!");
+    store.$reset();
+    timeout.value = setTimeout(() => {
+      router.push("/");
+    }, 2000);
   }
 }
 </script>
