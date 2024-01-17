@@ -153,7 +153,7 @@ async function onHandleSubmit(v, { resetForm }) {
 
 <style lang="css" scoped>
 .bg-cover {
-  background-image: url("assets/sushi/login.jpg");
+  background-image: url("https://img.freepik.com/free-photo/top-view-delicious-sushi-with-copy-space_23-2150857970.jpg?t=st=1705496106~exp=1705499706~hmac=1389a574115ba4e33e85189b26c64ae7d539a4eb82ffc1d4324b8d710af172ac&w=1480");
   background-size: cover;
   background-position: center;
   height: 300px;

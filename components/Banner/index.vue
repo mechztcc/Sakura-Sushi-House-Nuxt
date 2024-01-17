@@ -33,11 +33,10 @@
         </div>
         <div class="absolute flex bottom-0 right-1/2 text-white mb-5">
           <font-awesome-icon
-            :icon="index == 0 ? ['fas', 'circle'] : ['far', 'circle']"
-            class="mx-3"
-          />
-          <font-awesome-icon
-            :icon="index == 1 ? ['fas', 'circle'] : ['far', 'circle']"
+            v-for="(item, i) in banners"
+            :key="index"
+            :icon="index == i ? ['fas', 'circle'] : ['far', 'circle']"
+            class="mr-1"
           />
         </div>
       </div>
@@ -48,8 +47,10 @@
 import { ref } from "vue";
 
 const banners = [
-  "~assets/sushi/yakissoba.jpg",
-  "~assets/sushi/chicken-noodle.jpg",
+  "https://img.freepik.com/free-photo/fresh-seafood-meal-plate-japanese-cultures-presented-generated-by-ai_188544-20653.jpg?t=st=1705496188~exp=1705499788~hmac=95b26f2ea1904d7a499b9602fb539549a3911453c3175ebc05c92a5a5e738c09&w=1480",
+  "https://img.freepik.com/free-photo/delicious-sushi-table_23-2150857820.jpg?t=st=1705496213~exp=1705499813~hmac=aaa352aa6c8d1f64da92a97367d612eeecc354066a99127405003ae98dc64022&w=1380",
+  "https://img.freepik.com/free-photo/freshness-variety-plate-gourmet-seafood-meal-generated-by-artificial-intelligence_25030-64499.jpg?t=st=1705496252~exp=1705499852~hmac=e3c74468cd6c9997eccb533a7676c4a396b8d401f2295e5ae2fbf9866a67e450&w=1480",
+  "https://img.freepik.com/free-photo/expert-male-chef-crafting-fresh-meal-indoors-generated-by-ai_188544-26105.jpg?t=st=1705496724~exp=1705500324~hmac=6fb29d45e7bc53ddfb218a1a344097696b3bcce29999606cc57a2a73ffee2283&w=1480"
 ];
 const index = ref(0);
 const currentBanner = computed(() => banners[index.value]);
@@ -58,21 +59,19 @@ function changeBanner() {
     index.value = (index.value + 1) % banners.length;
   }, 5000);
 }
-
-function onHandle() {
-  index.value == 1 ? (index.value = 0) : (index.value = 1);
-}
-
 onMounted(() => {
   changeBanner();
 });
+
+function onHandle() {
+  index.value = (index.value + 1) % banners.length;
+}
 </script>
 
 <style lang="css" scoped>
 img {
   height: clamp(75vh, 75vh, 75vh);
   object-fit: cover;
-  /* animation: fade 2s ease-in-out; */
 }
 
 @keyframes fade {
