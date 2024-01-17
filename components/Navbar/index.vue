@@ -40,6 +40,14 @@
           <font-awesome-icon :icon="['fas', 'cart-shopping']" />
         </button>
       </NuxtLink>
+      <NuxtLink to="/orders" v-if="hasCredentials">
+        <button
+          class="hover:text-green-400 font-semibold text-lg mx-3"
+          type="button"
+        >
+          <font-awesome-icon :icon="['fas', 'receipt']" />
+        </button>
+      </NuxtLink>
       <button
         class="hover:text-green-400 font-semibold text-lg mx-3"
         type="button"
