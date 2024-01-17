@@ -46,24 +46,47 @@
   </div>
 
   <button
-    @click="onSubmit"
+    v-if="!pending"
+    @click="onHandleSubmit"
     class="text-white bg-green-400 hover:bg-green-500 hover:shadow-xl mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
   >
     CONCLUIR
   </button>
+  <button
+    v-if="pending"
+    disabled
+    class="text-white bg-green-300 mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
+  >
+    <font-awesome-icon :icon="['fas', 'shrimp']" />
+  </button>
 </template>
 
 <script setup>
+const runtimeConfig = useRuntimeConfig();
 const store = useCartStore();
+const notification = useNotificationStore();
+const payload = ref({});
 
-const prefs = ref("");
+const url = runtimeConfig.public.apiBase;
+const { execute, pending, data } = useLazyFetch(`${url}/orders`, {
+  method: "POST",
+  body: payload,
+});
 
-async function onSubmit() {
+async function onHandleSubmit() {
   const items = store.items;
-  const payload = {
+  if (items.length == 0) {
+    return;
+  }
+  payload.value = {
     preferences: store.prefs,
     products: [...items],
   };
+
+  await execute();
+  if (data.value) {
+    notification.onSuccess("Compra realizada com sucesso!");
+  }
 }
 </script>
 
