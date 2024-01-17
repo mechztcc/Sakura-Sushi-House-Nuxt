@@ -138,6 +138,7 @@ import { useNotificationStore } from "@/stores/notifications";
 definePageMeta({ layout: "no-navbar" });
 
 const store = useNotificationStore();
+const cartStore = useCartStore();
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 
@@ -159,6 +160,11 @@ const { execute, data, pending, error } = useLazyFetch(`${url}/users`, {
 });
 
 const registrationForm = ref(null);
+
+onMounted(() => {
+  cartStore.$reset();
+  localStorage.clear();
+});
 
 async function onHandleSubmit(v, { resetForm }) {
   payload.value = {
