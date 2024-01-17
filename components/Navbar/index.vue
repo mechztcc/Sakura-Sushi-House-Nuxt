@@ -27,7 +27,7 @@
           placeholder="Buscar..."
         />
       </div>
-      <NuxtLink to="/login">
+      <NuxtLink to="/login" v-if="!hasCredentials">
         <button class="hover:text-green-400 font-semibold text-lg mx-3">
           Entrar
         </button>
@@ -46,6 +46,11 @@
       >
         <font-awesome-icon :icon="['far', 'heart']" />
       </button>
+      <NuxtLink to="/login" v-if="hasCredentials">
+        <button class="hover:text-green-400 font-semibold text-lg mx-3">
+          <font-awesome-icon :icon="['fas', 'right-from-bracket']" />
+        </button>
+      </NuxtLink>
     </div>
   </div>
 </template>

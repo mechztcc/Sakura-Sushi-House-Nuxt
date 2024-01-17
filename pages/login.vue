@@ -98,9 +98,9 @@ import { useStorage } from "@vueuse/core";
 definePageMeta({ layout: "no-navbar" });
 
 const store = useNotificationStore();
+const cartStore = useCartStore();
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
-const storage = useStorage("credencials");
 
 const schema = toTypedSchema(
   zod.object({
@@ -121,6 +121,7 @@ const { execute, data, pending, error } = useLazyFetch(`${url}/auth`, {
 onMounted(() => {
   if (process.client) {
     localStorage.clear();
+    cartStore.$reset();
   }
 });
 
