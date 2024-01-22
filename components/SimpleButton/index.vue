@@ -15,7 +15,7 @@
 <script setup lang="ts">
 const props = defineProps({
   label: { type: String },
-  pending: { type: Boolean },
+  pending: { type: Boolean, default: true },
 });
 </script>
 
