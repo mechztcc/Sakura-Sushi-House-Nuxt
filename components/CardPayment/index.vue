@@ -45,21 +45,10 @@
     ></textarea>
   </div>
 
-  <button
-    v-if="pending"
-    @click="onHandleSubmit()"
-    class="text-white bg-green-400 hover:bg-green-500 hover:shadow-xl mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
-  >
-    CONCLUIR
-  </button>
 
-  <button
-    v-if="!pending"
-    disabled
-    class="text-white bg-green-300 mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
-  >
+  <SimpleButton :pending="pending" label="CONCLUIR"  @click="onHandleSubmit()">
     <font-awesome-icon :icon="['fas', 'shrimp']" />
-  </button>
+  </SimpleButton>
 </template>
 
 <script setup lang="ts">
