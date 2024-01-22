@@ -46,7 +46,7 @@
   </div>
 
   <button
-    v-if="!isLoading"
+    v-if="pending"
     @click="onHandleSubmit()"
     class="text-white bg-green-400 hover:bg-green-500 hover:shadow-xl mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
   >
@@ -54,7 +54,7 @@
   </button>
 
   <button
-    v-if="isLoading"
+    v-if="!pending"
     disabled
     class="text-white bg-green-300 mt-5 hover:shadow-green-200 font-semibold text-lg py-2 px-3 rounded-full w-full mr-2"
   >
@@ -62,24 +62,38 @@
   </button>
 </template>
 
-<script setup>
-import { useStorage } from "@vueuse/core";
-
+<script setup lang="ts">
 const runtimeConfig = useRuntimeConfig();
 const store = useCartStore();
 const notification = useNotificationStore();
-const credentials = useStorage("credentials");
 
-const payload = ref({});
-const token = ref("");
-const isLoading = ref(false);
+const payload = computed(() => {
+  return {
+    preferences: store.prefs,
+    product: store.items,
+  };
+});
+
+const token = computed(() => {
+  if (!process.client) {
+    return;
+  }
+  const data = JSON.parse(localStorage.getItem("credentials") ?? "");
+  return data.user.token;
+});
+
 const router = useRouter();
-const timeout = ref(null);
+const timeout = ref<any>(null);
 const url = runtimeConfig.public.apiBase;
 
-onMounted(() => {
-  const storedCredentials = JSON.parse(credentials.value);
-  token.value = storedCredentials.user.token;
+const { error, data, pending, execute } = useFetch(`${url}/orders`, {
+  method: "POST",
+  body: payload,
+  immediate: false,
+  watch: false,
+  headers: {
+    authorization: token,
+  },
 });
 
 onUnmounted(() => {
@@ -92,20 +106,7 @@ async function onHandleSubmit() {
     return;
   }
 
-  payload.value = {
-    preferences: store.prefs,
-    products: items,
-  };
-
-  isLoading.value = true;
-  const { error, data } = await useLazyFetch(`${url}/orders`, {
-    method: "POST",
-    body: payload,
-    headers: {
-      authorization: `${token.value}`,
-    },
-  });
-  isLoading.value = false;
+  await execute();
 
   if (error.value?.data) {
     notification.onError(error.value.data.message);
