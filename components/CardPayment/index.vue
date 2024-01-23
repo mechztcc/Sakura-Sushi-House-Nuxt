@@ -45,14 +45,13 @@
     ></textarea>
   </div>
 
-
-  <SimpleButton :pending="pending" label="CONCLUIR"  @click="onHandleSubmit()">
+  <SimpleButton :pending="pending" label="CONCLUIR" @click="onHandleSubmit()">
     <font-awesome-icon :icon="['fas', 'shrimp']" />
   </SimpleButton>
 </template>
 
 <script setup lang="ts">
-const runtimeConfig = useRuntimeConfig();
+import { useFetchAuth } from "../../composables/useFetchAuth";
 const store = useCartStore();
 const notification = useNotificationStore();
 
@@ -63,26 +62,11 @@ const payload = computed(() => {
   };
 });
 
-const token = computed(() => {
-  if (!process.client) {
-    return;
-  }
-  const data = JSON.parse(localStorage.getItem("credentials") ?? "");
-  return data.user.token;
-});
-
 const router = useRouter();
 const timeout = ref<any>(null);
-const url = runtimeConfig.public.apiBase;
-
-const { error, data, pending, execute } = useFetch(`${url}/orders`, {
-  method: "POST",
+const { data, error, execute, pending } = useFetchAuth("orders", {
   body: payload,
-  immediate: false,
-  watch: false,
-  headers: {
-    authorization: token,
-  },
+  method: "POST",
 });
 
 onUnmounted(() => {
