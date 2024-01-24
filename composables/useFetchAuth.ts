@@ -1,9 +1,13 @@
 interface IParams {
-  body: any;
-  method: "POST" | "GET" | "PUT" | "DELETE";
+  body?: any;
+  method: 'post' | 'get' | 'put' | 'delete';
+  immediate: boolean;
 }
 
-export const useFetchAuth = (url: string, { body, method }: IParams) => {
+export default function useFetchAuth(
+  url: string,
+  { body, method, immediate }: IParams
+) {
   const runtimeConfig = useRuntimeConfig();
   const api = runtimeConfig.public.apiBase;
 
@@ -11,18 +15,19 @@ export const useFetchAuth = (url: string, { body, method }: IParams) => {
     if (!process.client) {
       return;
     }
-
     const data = JSON.parse(localStorage.getItem("credentials") ?? "");
     return data.user.token;
   });
+
   const { error, data, pending, execute } = useFetch(`${api}/${url}`, {
-    method,
     body,
-    immediate: false,
+    immediate,
     watch: false,
     headers: {
       authorization: token,
     },
+    method: 'get', 
+    server: true
   });
 
   return {
@@ -31,4 +36,4 @@ export const useFetchAuth = (url: string, { body, method }: IParams) => {
     pending,
     execute,
   };
-};
+}

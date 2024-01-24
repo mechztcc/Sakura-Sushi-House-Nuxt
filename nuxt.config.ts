@@ -6,6 +6,9 @@ export default defineNuxtConfig({
       apiBase: "http://localhost:3000",
     },
   },
+  imports: {
+    // dirs: ["composables"],
+  },
   modules: [
     "@pinia/nuxt",
     "@nuxtjs/device",

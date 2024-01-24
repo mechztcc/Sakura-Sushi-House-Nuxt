@@ -7,20 +7,25 @@
             :icon="['fas', 'receipt']"
             class="p-2 bg-green-400 text-white rounded-xl mr-3 shadow-lg shadow-green-200"
           />
-          <h1 class="text-3xl title">Meus Pedidos</h1>
+          <h1 class="text-3xl title" @click="execute()">Meus Pedidos</h1>
         </div>
       </div>
     </div>
 
-    <OrderItem />
-    <OrderItem />
-    <OrderItem />
-    <OrderItem />
-    <OrderItem />
-    <OrderItem />
+    <OrderItem :order="item" v-for="(item, index) in data" :key="index" />
   </NuxtLayout>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+const { data, error, pending, execute } = useFetchAuth(`orders`, {
+  method: "get",
+  immediate: false,
+});
+
+onMounted(async () => {
+  await execute();
+});
+</script>
 
 <style lang="css" scoped></style>

@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { useFetchAuth } from "../../composables/useFetchAuth";
+import useFetchAuth from "../../composables/useFetchAuth";
 const store = useCartStore();
 const notification = useNotificationStore();
 
@@ -66,7 +66,8 @@ const router = useRouter();
 const timeout = ref<any>(null);
 const { data, error, execute, pending } = useFetchAuth("orders", {
   body: payload,
-  method: "POST",
+  method: "post",
+  immediate: false,
 });
 
 onUnmounted(() => {
