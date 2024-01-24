@@ -7,11 +7,12 @@
             :icon="['fas', 'receipt']"
             class="p-2 bg-green-400 text-white rounded-xl mr-3 shadow-lg shadow-green-200"
           />
-          <h1 class="text-3xl title" @click="execute()">Meus Pedidos</h1>
+          <h1 class="text-3xl title">Meus Pedidos</h1>
         </div>
       </div>
     </div>
 
+    <Load v-if="pending"/>
     <OrderItem :order="item" v-for="(item, index) in data" :key="index" />
   </NuxtLayout>
 </template>

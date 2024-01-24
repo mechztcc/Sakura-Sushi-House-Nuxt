@@ -26,7 +26,7 @@ export default function useFetchAuth(
     headers: {
       authorization: token,
     },
-    method: 'get', 
+    method, 
     server: true
   });
 
