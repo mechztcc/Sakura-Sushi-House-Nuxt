@@ -8,7 +8,7 @@
 
     <div class="col-span-1">
       <div class="flex flex-col mx-5">
-        <div class="flex items-center mt-5 md:mt-0">
+        <div class="flex items-center mt-5 md:mt-0 mb-3">
           <font-awesome-icon
             :icon="['fas', 'basket-shopping']"
             class="p-2 bg-green-400 mr-2 text-white rounded-xl shadow-lg shadow-green-200"
@@ -16,7 +16,7 @@
           <span class="my-2 mx-2 text-green-400 font-semibold">Pedido</span>
         </div>
         <div
-          class="flex justify-between mt-3"
+          class="flex justify-between mb-1"
           v-for="(prod, index) in order.products"
           :key="index"
         >
