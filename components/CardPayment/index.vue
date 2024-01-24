@@ -82,15 +82,11 @@ async function onHandleSubmit() {
 
   await execute();
 
-  if (error.value?.data) {
-    notification.onError(error.value.data.message);
-  }
-
   if (data.value) {
     notification.onSuccess("Compra realizada com sucesso!");
     store.$reset();
     timeout.value = setTimeout(() => {
-      router.push("/");
+      router.push("/orders");
     }, 2000);
   }
 }

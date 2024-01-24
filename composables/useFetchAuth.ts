@@ -1,6 +1,6 @@
 interface IParams {
   body?: any;
-  method: 'post' | 'get' | 'put' | 'delete';
+  method: "post" | "get" | "put" | "delete";
   immediate: boolean;
 }
 
@@ -10,6 +10,7 @@ export default function useFetchAuth(
 ) {
   const runtimeConfig = useRuntimeConfig();
   const api = runtimeConfig.public.apiBase;
+  const notification = useNotificationStore();
 
   const token = computed(() => {
     if (!process.client) {
@@ -26,8 +27,11 @@ export default function useFetchAuth(
     headers: {
       authorization: token,
     },
-    method, 
-    server: true
+    method,
+    server: true,
+    onResponseError: (e: any) => {
+      notification.onError(e.response._data.message);
+    },
   });
 
   return {
